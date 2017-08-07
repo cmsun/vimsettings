@@ -1,0 +1,2 @@
+1.apt-cyg install chere
+2.chere -i -t mintty

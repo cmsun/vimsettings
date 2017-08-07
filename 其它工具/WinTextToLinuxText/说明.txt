@@ -1,0 +1,3 @@
+1. 可以指定输入文件如 WinTextToLinuxText.exe _vimrc //把windows格式的_vimrc文件文件转换成linux格式的_vimrc
+2.可以使用管道如：
+find . -type f -name "*.vim" | WinTextToLinuxText.exe //把当前目录下的所有以.vim结尾的文件转化成linux文本格式(find -type f:指定是配置类型是文件而不是目录)

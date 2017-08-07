@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\folder\shell\minttyshell]
+@="Open Mintty Prompt Here"
+[HKEY_CLASSES_ROOT\folder\shell\minttyshell\command]
+@="\"E:\\ProgramFiles\\msys64\\usr\\bin\\mintty.exe\" \"E:\\ProgramFiles\\msys64\\usr\\bin\\bash\" -l -i"
+
+[HKEY_CLASSES_ROOT\Directory\shell\minttyshell]
+@="Open Mintty Prompt Here"
+[HKEY_CLASSES_ROOT\Directory\shell\minttyshell\command]
+@="\"E:\\ProgramFiles\\msys64\\usr\\bin\\mintty.exe\" \"E:\\ProgramFiles\\msys64\\usr\\bin\\bash\" -l -i"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\minttyshell]
+@="Open Mintty Prompt Here"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\minttyshell\command]
+@="\"E:\\ProgramFiles\\msys64\\usr\\bin\\mintty.exe\" \"E:\\ProgramFiles\\msys64\\usr\\bin\\bash\" -l -i"

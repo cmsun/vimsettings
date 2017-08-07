@@ -1,0 +1,40 @@
+1.下载vim: git https://github.com/vim/vim.gti
+
+2. make distclean
+
+3. 安装lua、perl、ruby 以及它们的依赖库：
+
+安装ncurse-devel(ncurses是为了能在终端使用vim): pacman -Sy ncurses-devel
+
+安装crypt: pacman -Sy crypt
+安装libcrypt-devel: pacman -Sy libcrypt-devel
+
+安装gmp: pacman -Sy gmp
+pacman安装的gmp只有动态链接库没有静态库，所以最后链接时会出错。解决方法为：
+gvim src/auto/config.mk 在RUBY_LIBS选项里删除 -lgmp 然后加上 -lmsys-gmp-10 -L/usr/bin
+注意-L/usr/bin必须加在-L/usr/lib的后面否则还是会链接错误
+
+4. 在终端输入以下指令
+./configure \
+--prefix=/opt \
+--enable-terminal \
+--enable-gui=auto \
+--enable-fontset \
+--enable-multibyte \
+--enable-pythoninterp=dynamic \
+--with-python-config-dir=/usr/lib/python2.7/config \
+--enable-python3interp=dynamic \
+--with-python3-config-dir=/usr/lib/python3.6/config-3.6m \
+--enable-rubyinterp=yes \
+--enable-perlinterp=yes \
+--enable-luainterp=yes \
+--enable-cscope \
+--with-vim-name=vim \
+--with-features=huge
+
+在configure的时候如果发现 PYTHON3 DISABLED 则打开vim/src/auto/configure文件，将python3_ok这一项直接设置成ok
+
+5. make -j2 -release
+
+6. make dist 打包成一个安装包
+

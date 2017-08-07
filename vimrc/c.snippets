@@ -1,0 +1,158 @@
+# main()
+snippet main
+	int main(int argc, const char *argv[])
+	{
+		${1}
+		return 0;
+	}
+#
+snippet vmain
+	int main(void)
+	{
+		${1}
+		return 0;
+	}
+#
+# #include <...>
+snippet inc
+	#include <${1:stdio.h}>${2}
+#
+# #include "..."
+snippet incl
+	#include "${1:`Filename("$1.h")`}"${2}
+#
+# Header Include-Guard
+snippet once
+	#ifndef ${1:`toupper(Filename('$1_H', 'UNTITLED_H'))`}
+	#define $1
+
+	${2}
+
+	#endif /* end of include guard: $1 */
+#
+# #define
+snippet def
+	#define ${1:}
+#
+# #ifdef ... #endif
+snippet ifdef
+	#ifdef ${1:SYMBOL}
+		${2:#define}
+	#endif
+#
+# #ifndef ... #define ... #endif
+snippet ifndef
+	#ifndef ${1:SYMBOL}
+	#define $1 ${2:value}
+	#endif
+#
+# If Condition
+snippet if
+	if(${1:/* condition */})
+	{
+		${2:/* code */}
+	}
+#
+# If else
+snippet ife
+	if(${1:/* condition */})
+	{
+		${2:/* code */}
+	}
+	else ${3}
+	{
+		${4:/* code */}
+	}
+#
+# Ternary conditional
+snippet t
+	${1:/* condition */} ? ${2:a} : ${3:b};
+#
+# Do While Loop
+snippet do
+	do {
+		${2:/* code */}
+	} while (${1:/* condition */});
+#
+# While Loop
+snippet while
+	while(${1:/* condition */})
+	{
+		${2:/* code */}
+	}
+#
+# For Loop
+snippet for
+	for(int ${4:i} = ${1:0}; $4 < ${2:10}; ${3:++$4})
+	{
+		${5:/* code */}
+	}
+snippet forx
+	for(${1:int i = 0}; ${2:i < 10}; ${3:++i})
+	{
+		${4:/* code */}
+	}
+#
+# Function
+snippet fun
+	${1:void}${2:function_name}(${3})
+	{
+		${4:/* code */}
+	}
+#
+# Function Declaration
+snippet fundef
+	${1:void}${2:function_name}(${3});${4}
+#
+# Struct
+snippet st
+	struct ${1:`Filename('$1_t', 'name')`} {
+		${2:/* data */}
+	}${3: /* optional variable list */};${4}
+#
+#  Enumerate
+snippet en
+	enum {${1:member}, ${2:}};
+# Typedef
+snippet td
+	typedef ${1:int} ${2:MyCustomType};${3}
+#
+# Typedef struct
+snippet tds
+	typedef struct ${2:_$1 }{
+		${3:/* data */}
+	} ${1:`Filename('$1_t', 'name')`};
+#
+# Typdef enum
+snippet tde
+	typedef enum {
+		${1:/* data */}
+	} ${2:foo};
+#
+#Function printf
+snippet pf
+	printf("${1}%d\n"${2});${3}
+#
+#Function Comments
+snippet comment
+	/*
+	********************************************************************************
+	*                               ${1} 
+	*
+	* Description : ${2:none}
+	*
+	* Arguments   : ${3:none}
+	*
+	* Returns     : ${4:none}
+	*
+	* Note(s)     : ${5:none}
+	********************************************************************************
+	*/
+#
+#Function note
+snippet note
+	/*
+	********************************************************************************
+	* Note : ${1} 
+	********************************************************************************
+	*/

@@ -1,0 +1,47 @@
+一.在msys中安装配套的软件
+1.pacman -Sl | grep 'man'     (显示最新man手册)
+2.pacman -Sy man-pages-posix  (安装man手册)
+3.pacman -Sy python2          (安装python27)
+4.pacman -R python	      (移除软件)
+5.pacman -Su                  (msys系统升级)
+6.pacman -Su vim	      (如果在msys中安装了vim但是不能使用，可以使用这个指令对系统进行升级，以适应新安装的vim)
+
+二.把mintty功能加到鼠标右键(如果是msys32则把以下内容中的“msys64”改成“msys32”):
+1.新建一个以 .reg 结尾的注册表文件，输入以下内容然后运行（mintty.exe 和 bash 文件的位置按情况修改）：
+Windows Registry Editor Version 5.00
+
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\folder\shell\minttyshell]
+@="Open Mintty Prompt Here"
+[HKEY_CLASSES_ROOT\folder\shell\minttyshell\command]
+@="\"E:\\ProgramFiles\\msys64\\usr\\bin\\mintty.exe\" \"E:\\ProgramFiles\\msys64\\usr\\bin\\bash\" -l -i"
+
+[HKEY_CLASSES_ROOT\Directory\shell\minttyshell]
+@="Open Mintty Prompt Here"
+[HKEY_CLASSES_ROOT\Directory\shell\minttyshell\command]
+@="\"E:\\ProgramFiles\\msys64\\usr\\bin\\mintty.exe\" \"E:\\ProgramFiles\\msys64\\usr\\bin\\bash\" -l -i"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\minttyshell]
+@="Open Mintty Prompt Here"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\minttyshell\command]
+@="\"E:\\ProgramFiles\\msys64\\usr\\bin\\mintty.exe\" \"E:\\ProgramFiles\\msys64\\usr\\bin\\bash\" -l -i"
+
+2.在文件~/.bashrc末尾加入(等号两边不能有空格)：
+alias ls='ls --color'
+alias ll='ls -l --color'
+ 
+3.在文件 msys64/ect/profile 的开头加入这句：
+export CursorLocation=$(pwd)
+
+在文件 ~/.bashrc 的末尾加入以下语句：
+if [ "$CursorLocation" == "/" ]; then
+    cd $HOME
+else
+    cd "$CursorLocation"
+fi 
+unset CursorLocation
+
+4.msys2_shell.bat发送到桌面快捷方式，然后右击桌面快捷方式，在“属性”->“快捷方式”中设置快捷键为Ctrl+Alt+T
+
+5.右键桌面msys2_shell.bat快捷方式，选择“属性”->“快捷方式”->“更改图标”。更改成c:\msys64里的msys2.ico图标

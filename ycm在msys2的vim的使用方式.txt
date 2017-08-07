@@ -1,0 +1,13 @@
+1.安装msys中的 gcc cmake make clang pyhotn vim (注意是msys版本而不是mingw版本)
+2.在~目录里创建.vimrc和.vim然后在.vim目录里创建bundle目录
+3.git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+4.下载并更新所有的插件
+5.在build目录中执行以下指令并编译
+cmake -G "Unix Makefiles" -DEXTERNAL_LIBCLANG_PATH="/usr/bin/msys-clang.dll" . ../cpp
+或者
+cmake -G "Unix Makefiles" -DUSE_SYSTEM_LIBCLANG=ON . ../cpp
+然后 make -j2 -release 或者 cmake --build . --config Release
+
+*要注意msys中的vim对python的支持情况：打开vim并输入命令 py print(1+2) 以及 py3 print(1+2)
+根据对python的支持情况在cpp的CMakeList.txt中选择使用python2还是python3
+option( USE_PYTHON2 "If on, link to Python 2 instead of 3" ON )

@@ -1,0 +1,3 @@
+apt-cyg install xorg-server
+apt-cyg install xinit
+使用xinit命令来启动图形界面，之后就能在图形界面中使用pyqt

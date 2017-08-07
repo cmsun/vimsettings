@@ -1,0 +1,4 @@
+下载：git clone https://github.com/transcode-open/apt-cyg.git
+找到apt-cyg脚本：cd apt-cyg
+将windos文本格式转成unix文本格式：dos2unix apt-cyg
+将apt-cyg脚本复制到/usr/bin/中：mv apt-cyg /usr/bin/
