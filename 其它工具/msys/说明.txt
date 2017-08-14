@@ -1,10 +1,35 @@
-一.在msys中安装配套的软件
-1.pacman -Sl | grep 'man'     (显示最新man手册)
-2.pacman -Sy man-pages-posix  (安装man手册)
-3.pacman -Sy python2          (安装python27)
-4.pacman -R python	      (移除软件)
-5.pacman -Su                  (msys系统升级)
-6.pacman -Su vim	      (如果在msys中安装了vim但是不能使用，可以使用这个指令对系统进行升级，以适应新安装的vim)
+一.Pacman常用命令
+Pacman是Arch Linux 的包管理器。它将一个简单的二进制包格式和易用的构建系统结合了起来。
+不管软件包是来自官方的 Arch 库还是用户自己创建，Pacman 都能方便得管理。
+
+1.更新系统
+在 Archlinux 中，使用一条命令即可对整个系统进行更新：
+pacman -Syu
+如果你已经使用pacman -Sy将本地的包数据库与远程的仓库进行了同步，也可以只执行：pacman -Su
+
+2.安装包
+pacman -S 包名：例如，执行 pacman -S firefox 将安装 Firefox。你也可以同时安装多个包，只需以空格分隔包名即可。
+pacman -Sy 包名：与上面命令不同的是，该命令将在同步包数据库后再执行安装。
+pacman -Sv 包名：在显示一些操作信息后执行安装。
+pacman -U：安装本地包，其扩展名为 pkg.tar.gz。
+pacman -U http://www.example.com/repo/example.pkg.tar.xz 安装一个远程包（不在 pacman 配置的源里面）
+
+3.删除包
+pacman -R 包名：该命令将只删除包，保留其全部已经安装的依赖关系
+pacman -Rs 包名：在删除包的同时，删除其所有没有被其他已安装软件包使用的依赖关系
+pacman -Rsc 包名：在删除包的同时，删除所有依赖这个软件包的程序
+pacman -Rd 包名：在删除包时不检查依赖。
+
+4.搜索包
+pacman -Ss 关键字：在仓库中搜索含关键字的包。
+pacman -Qs 关键字： 搜索已安装的包。
+pacman -Qi 包名：查看有关包的详尽信息。
+pacman -Ql 包名：列出该包的文件。
+
+5.其他用法
+pacman -Sw 包名：只下载包，不安装。
+pacman -Sc：清理未安装的包文件，包文件位于 /var/cache/pacman/pkg/ 目录。
+pacman -Scc：清理所有的缓存文件。
 
 二.把mintty功能加到鼠标右键(如果是msys32则把以下内容中的“msys64”改成“msys32”):
 1.新建一个以 .reg 结尾的注册表文件，输入以下内容然后运行（mintty.exe 和 bash 文件的位置按情况修改）：
