@@ -35,56 +35,14 @@ option( USE_PYTHON2 "If on, link to Python 2 instead of 3" ON )
 或者：cmake -G "MinGW Makefiles" -DPATH_TO_LLVM_ROOT="E:/ProgramFiles/LLVM" . ../cpp
 或者：cmake -G "MinGW Makefiles" -DEXTERNAL_LIBCLANG_PATH="E:/ProgramFiles/LLVM/bin/libclang.dll" . ../cpp
 
-8.cmake --build . --config release
+8. cmake --build . --config release
 或者: mingw32-make -j2 -release
-
-9.将ycm_core.pyd和libclang.dll复制到 ../python中
 
 *****************************************************************************
 
 可能出现的错误:
-1."during compiling stage occurs undefined reference to `__imp__Py_...'"
- 这个情况是因为Python35\libs目录中没有libpython35.a这个库文件，下载这个文件或者重新安装python
 
-2."..\BoostParts\libBoostParts.a(tss_dll.cpp.obj):tss_dll.cpp:(.text+0x70): multiple definition of `boost::tss_cleanup_implemented()'"
-解决方法：注释掉bundle\YouCompleteMe\third_party\ycmd\cpp\ycm目录下的ycm_client_supprt.cpp 和 ycm_core.cpp文件的最后三行，变成：
-//namespace boost {
-//void tss_cleanup_implemented() {}
-//};
-
-3.如果找不到python库或者连接python库时出错，原因可能是先安装了python然后才安装cmake.
-解决方法是卸载python再重新安装，删除build目录里的所有内容，重新cmake
-
-4.编译成功并将ycm_core.pyd、ycm_support_libs.pyd和libclang.dll复制到 ../python后，
-启动时出现报警："YCM libraries found in old YouCompleteMe/python location; please 
-RECOMPILE YCM."
-解决方法：修改bundle\YouCompleteMe\plugin\youcompleteme.vim文件的以下语句：
-if s:YcmLibsPresentIn( s:python_folder_path )
-  echohl WarningMsg |
-        \ echomsg "YCM libraries found in old YouCompleteMe/python location; " .
-        \ "please RECOMPILE YCM." |
-        \ echohl None
-  call s:restore_cpo()
-  finish
-endif
-将第一句"if s:YcmLibsPresentIn( s:python_folder_path )"改成"if !s:YcmLibsPresentIn( s:python_folder_path )"
-这个语句是检查ycm_core.pyd和ycm_support_libs.pyd是否存在。
-
-5.编译并复制ycm_client_supprt.pyd 和 ycm_core.pyd这两个文件后不能运行make clean,因为这会删除
-bundle\YouCompleteMe\third_party\ycmd目录下的原pyd文件。vim启动时bundle\YouCompleteMe\youcompleteme.vim文件会检查这两个pyd文件是否存在
-
-6.如果不能补全并且提示“read timed out"或者提示无法补全，这个问题可能是由于#define问题忽略了跟工程有关的文件则读取无关的头文件，比如使用 
-Blorland C++ 的vcl库就会出现这个情况。这时要在 .ycm_extra_conf.py 里添加'-D_DEBUG' -D__BORLANDC__=0x564'等等条件（-D_DEBUG相当于在头文件
-里定义：#define _DEBUG）,然后调用ycmDiags命令进制编译。
-同时可以修改bundle/YouCompleteMe/python/ycm/client/completion_request.py文件中的TIMEOUT_SECONDS变量，把超时时间加长为1秒或者2秒。
-
-7.如果不能补全，调用 ycmDebugInfo查看错误，如果提示 Server Crashd,no debug info from Server，有可能是vimrc里变量g:ycm_global_ycm_extra_conf
-设置的问题。
-
-8.如果出现R6034的RunTimer Error，则说明环境变量中包含了多个msvcr90.dll，在msys中输入whereis msvcr90.dll查看环境变量中是否包含多个msvcr90.dll。
-并把除了C:\Windows\system32\msvcr90.dll之外的包含msvcr90.dll的路径从环境变量中去掉。
-
-9.如果出现“UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-3: ordinal not in range(128)”的错误提示而无法补全。这是
+1.如果出现“UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-3: ordinal not in range(128)”的错误提示而无法补全。这是
 因为python不支持unicode导致的。解决的方法是打开.ycm_extra_conf.py文件，加上以下python代码：
 import sys
 reload(sys)

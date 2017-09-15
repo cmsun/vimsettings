@@ -505,11 +505,7 @@ endif
 Bundle 'gmarik/vundle'
 
 "-----------补全插件----------------------
-if( s:suffix == "c" || s:suffix == "cpp" ||
-  \ s:suffix == "h" || s:suffix == "hpp" || 
-  \ s:suffix == "py" )
-    Bundle 'Valloric/YouCompleteMe'
-endif
+Bundle 'Valloric/YouCompleteMe'
 
 "补全() "" ''等的插件。会占用<c-h>使其作为删除键。
 "解决方法为打开auto-pairs.vim文件，注释掉455行，即下面这行：
