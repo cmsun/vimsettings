@@ -456,8 +456,9 @@ func CsPrj()
         :!sed -i 's/\//\\\/g' cscope.files
         :!cscope -Rbq -i cscope.files
     else
-        :!find `pwd` -name "*.[ch]" -o -name "*.[ch]pp" -o -name "*.py" > cscope.files
-        :!cscope -Rbq -P -i cscope.files
+        " :!find `pwd` -name "*.[ch]" -o -name "*.[ch]pp" -o -name "*.py" > cscope.files
+        :!find . -name "*.[ch]" -o -name "*.[ch]pp" -o -name "*.py" > cscope.files
+        :!cscope -Rbq -i cscope.files
     endif
 endfunc
 
