@@ -368,6 +368,21 @@ elseif( s:suffix == "py" )
     set tags+=$FOLDER_PATH/py3tags
 endif
 
+"自动加载当前目录及上层目录的tags文件
+py3 <<EOF
+import os, os.path
+from itertools import takewhile
+def iterate(fun, x):
+    yield x
+    for element in iterate(fun, fun(x)):
+        yield element
+for path in takewhile(lambda x: x!=os.path.dirname(x), iterate(os.path.dirname, os.getcwd())):
+    tagsfile = os.path.join(path, 'tags')
+    if os.access(tagsfile, os.R_OK): # file readable
+        vim.command('set tags+=' + tagsfile)
+        break
+EOF
+
 " -----------------------------------------------------------------------------
 "  < cscope 工具配置 >
 " -----------------------------------------------------------------------------
@@ -436,11 +451,14 @@ endfunc
 
 func CsPrj()
     if g:isWindows
-        :!find `pwd` -name \"*.[ch]\" -o -name \"*.[ch]pp\" -o -name \"*.py\" > cscope.files
+        " :!find `pwd` -name \"*.[ch]\" -o -name \"*.[ch]pp\" -o -name \"*.py\" > cscope.files
+        :!find . -name \"*.[ch]\" -o -name \"*.[ch]pp\" -o -name \"*.py\" > cscope.files
+        :!sed -i 's/\//\\\/g' cscope.files
+        :!cscope -Rbq -i cscope.files
     else
         :!find `pwd` -name "*.[ch]" -o -name "*.[ch]pp" -o -name "*.py" > cscope.files
+        :!cscope -Rbq -P -i cscope.files
     endif
-    :!cscope -Rbq -i cscope.files
 endfunc
 
 command! Cssys call CsSys()
@@ -461,10 +479,20 @@ if( (s:suffix == "c" || s:suffix == "cpp" ||
             cs add $FOLDER_PATH/py3cscope.out
     endif
 
-    "添加当前工程cscope数据库
-    if filereadable("cscope.out")
-        cs add cscope.out
-    endif
+"自动加载当前目录及上层目录的cscope.out文件
+py3 <<EOF
+import os, os.path
+from itertools import takewhile
+def iterate(fun, x):
+    yield x
+    for element in iterate(fun, fun(x)):
+        yield element
+for path in takewhile(lambda x: x!=os.path.dirname(x), iterate(os.path.dirname, os.getcwd())):
+    cscopefile = os.path.join(path, 'cscope.out')
+    if os.access(cscopefile, os.R_OK): # file readable
+        vim.command('cscope add ' + cscopefile +' '+ path)
+        break
+EOF
 
     "设定可以使用quickfix窗口来查看cscope结果(命令copen打开quickfix窗口查看cscope结果,命令cclose关闭窗口)
     set cscopequickfix=s-,c-,d-,i-,t-,e-
