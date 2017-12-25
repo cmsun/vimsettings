@@ -36,14 +36,14 @@ flags = [
     '-x', 'c++',
     '-std=gnu++11',
 
-    '-I', r'.',
-    '-I', QT_debug_dir,
-
     '-isystem', '/opt/Qt5.2.1/5.2.1/gcc_64/include',
     '-isystem', '/opt/Qt5.2.1/5.2.1/gcc_64/include/QtCore',
     '-isystem', '/opt/Qt5.2.1/5.2.1/gcc_64/include/QtGui',
     '-isystem', '/opt/Qt5.2.1/5.2.1/gcc_64/include/QtWidgets',
     '-isystem', '/opt/Qt5.2.1/5.2.1/gcc_64/include/QtOpenGL',
+
+    '-I', r'.',
+    '-I', QT_debug_dir,
 ]
 
 compilation_database_folder = ''

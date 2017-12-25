@@ -36,14 +36,14 @@ flags = [
     '-x', 'c++',
     '-std=gnu++11',
 
-    '-I', r'.',
-    '-isystem', r'C:\Program Files (x86)\Borland\CBuilder6\Include\Vcl',
-
     '-D_NDEBUG',
     '-D__BORLANDC__=0x564',
     '-DNO_STRICT',
     '-D_RTLDLL',
     '-DUSEPACKAGES',
+
+    '-I', r'.',
+    '-isystem', r'C:\Program Files (x86)\Borland\CBuilder6\Include\Vcl',
 ] 
 compilation_database_folder = '' 
 if compilation_database_folder: 

@@ -32,22 +32,23 @@ flags = [
     '-x', 'c++',
     '-std=gnu++11',
  
-    '-I', r'.',
-    '-I', r'include',
-    '-I', r'system/include',
-    '-I', r'system/include/arm',
-    '-I', r'system/include/cmsis',
-    '-I', r'system/include/cortexm',
-    '-I', r'system/include/diag',
-    '-I', r'system/include/stm32f1-stdperiph',
-
     '-DSTM32F10X_HD',
     '-DUSE_STDPERIPH_DRIVER',
-    '-DHSE_VALUE=72000000',    
+    '-DHSE_VALUE=8000000',    
     '-DDEBUG',
     '-DUSE_FULL_ASSERT',
     '-DTRACE',
     '-DOS_USE_TRACE_SEMIHOSTING_DEBUG',
+
+    '-isystem', r'include',
+    '-isystem', r'system/include',
+    '-isystem', r'system/include/arm',
+    '-isystem', r'system/include/cmsis',
+    '-isystem', r'system/include/cortexm',
+    '-isystem', r'system/include/diag',
+    '-isystem', r'system/include/stm32f1-stdperiph',
+
+    '-I', r'.',
 ] 
 compilation_database_folder = '' 
 if compilation_database_folder: 
