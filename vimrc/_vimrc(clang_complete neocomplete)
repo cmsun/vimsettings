@@ -893,6 +893,12 @@ endfunc
 "新建c、h、cpp、hpp文件时自动插入文件信息
 autocmd BufNewFile *.[ch],*.[ch]pp, exec ":call AddTitle()"
 
+func NewPyfile()
+    call append(0, "# -*- coding: utf-8 -*-")
+endfunc
+" 新建py文件时自动设置python文件为utf-8编码
+autocmd BufNewFile *.py exec ":call NewPyfile()"
+
 func UpdateTitle()
     "保存光标位置
     normal m`
