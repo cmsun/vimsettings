@@ -777,9 +777,11 @@ au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
 " 主要用"."命令来重复上次插件使用的命令
 
 " -----------------------------------------------------------------------------
-"   快速添加文件信息(添加函数信息请使用snipmate: comment+Tab)
+"   快速添加文件信息
 " -----------------------------------------------------------------------------
-func AutoAddTitle()  
+
+"新建c、h、cpp、hpp文件时自动插入文件信息
+func Auto_Add_C_Title()  
     call append( 0, "/*")
     call append( 1, "********************************************************************************")  
     call append( 2, "*                              COPYRIGHT NOTICE")  
@@ -793,14 +795,29 @@ func AutoAddTitle()
     call append(10, "*/")
     echohl WarningMsg | echo "Successful in adding the copyright." | echohl None  
 endfunc  
-"新建c、h、cpp、hpp文件时自动插入文件信息
-autocmd BufNewFile *.[ch],*.[ch]pp,*.py exec ":call AutoAddTitle()"
+autocmd BufNewFile *.[ch],*.[ch]pp exec ":call Auto_Add_C_Title()"
 
-func NewPyfile()
-    call append(11, "# -*- encoding: utf-8 -*-")
-endfunc
-" 新建py文件时自动设置python文件为utf-8编码
-autocmd BufNewFile *.py exec ":call NewPyfile()"
+"新建python文件时自动插入文件信息
+func Auto_Add_Python_Title()  
+    call append( 0, "#                            -*- coding: utf-8 -*-")  
+    call append( 1, "#*******************************************************************************")  
+    call append( 2, "#                              COPYRIGHT NOTICE")  
+    call append( 3, "#                             Copyright (c) 2016")  
+    call append( 4, "#                             All rights reserved")  
+    call append( 5, "#")  
+    call append( 6, "#  @fileName       : ".expand("%:t"))  
+    call append( 7, "#  @author         : scm 351721714@qq.com")  
+    call append( 8, "#  @create         : ".strftime("%Y/%m/%d %H:%M:%S"))  
+    call append( 9, "#*******************************************************************************")  
+    echohl WarningMsg | echo "Successful in adding the copyright." | echohl None  
+endfunc  
+autocmd BufNewFile *.py exec ":call Auto_Add_Python_Title()"
+
+" " 新建py文件时自动设置python文件为utf-8编码
+" func NewPyfile()
+    " call append(0, "# -*- coding: utf-8 -*-")
+" endfunc
+" autocmd BufNewFile *.py exec ":call NewPyfile()"
 
 " 自动更新修改时间
 " func UpdateTitle()
@@ -817,12 +834,24 @@ autocmd BufNewFile *.py exec ":call NewPyfile()"
 " "保存文件时自动更新时间
 " autocmd FileWritePre,BufWritePre *.[ch],*.[ch]pp exec ":call UpdateTitle()"
 
-func AddTitle()
+" 使用自定义命令 CTitle 添加c/c++文件的文件信息
+func Add_C_Title()
     normal m`
-    call cursor(13,1)
+    call cursor(6,1)
     if(search('*  @fileName       : ') == 0)
-        call AutoAddTitle()
+        call Auto_Add_C_Title()
     endif
     normal ``
 endfunc
-command! Title call AddTitle()
+command! CTitle call Add_C_Title()
+
+" 使用自定义命令 PYTitle 添加python文件的文件信息
+func Add_Python_Title()
+    normal m`
+    call cursor(6,1)
+    if(search('#  @fileName       : ') == 0)
+        call Auto_Add_Python_Title()
+    endif
+    normal ``
+endfunc
+command! PYTitle call Add_Python_Title()
